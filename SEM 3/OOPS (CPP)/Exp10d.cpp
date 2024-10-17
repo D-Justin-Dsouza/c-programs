@@ -11,7 +11,6 @@ public:
     float cca;
     float hra;
     float grossSalary;
-
     void calculateSalary() {
         da = 0.51 * basicPay;      
         cca = 100;                 
@@ -19,7 +18,6 @@ public:
         if (hra > 800) hra = 800;  
         grossSalary = basicPay + da + cca + hra;
     }
-
     void display() const {
         cout << setw(10) << empNo 
              << setw(15) << fixed << setprecision(2) << basicPay 
@@ -29,7 +27,6 @@ public:
              << setw(15) << fixed << setprecision(2) << grossSalary 
              << endl;
     }
-
     void writeToFile(ostream &outFile) const {
         outFile << setw(10) << empNo
                 << setw(15) << fixed << setprecision(2) << basicPay
@@ -39,13 +36,11 @@ public:
                 << setw(15) << fixed << setprecision(2) << grossSalary 
                 << endl;
     }
-
     void modifyBasicPay(float newPay) {
         basicPay = newPay;
         calculateSalary();
     }
 };
-
 void addEmployeeData() {
     ifstream inFile("employee.txt");
     ofstream outFile("salaries.txt", ios::app);
@@ -53,20 +48,16 @@ void addEmployeeData() {
         cout << "Error opening file for reading/writing.\n";
         return;
     }
-
-    // Check if the salaries.txt file is empty
     outFile.seekp(0, ios::end); 
     if (outFile.tellp() == 0) { 
         outFile << setw(10) << "Emp No." << setw(15) << "Basic Pay" << setw(15) << "DA"
                 << setw(10) << "CCA" << setw(10) << "HRA" << setw(15) << "Gross Salary" << endl;
     }
-
     Employee emp;
     while (inFile >> emp.empNo >> emp.basicPay) {
         emp.calculateSalary();
         emp.writeToFile(outFile);
     }
-
     inFile.close();
     outFile.close();
     cout << "\nEmployee data has been added to the salaries file.\n";
@@ -77,7 +68,6 @@ void displayEmployeeData() {
         cout << "Error opening salaries file for reading.\n";
         return;
     }
-
     Employee emp;
     string title;
     
@@ -99,7 +89,7 @@ void displayEmployeeData() {
 
 void modifyEmployeeBasicPay(int empNo, float newPay) {
     ifstream inFile("salaries.txt");
-    ofstream tempFile("temp.txt");  // Temporary file to store updated data
+    ofstream tempFile("temp.txt"); 
 
     if (!inFile || !tempFile) {
         cout << "Error opening file for modification.\n";
@@ -109,32 +99,27 @@ void modifyEmployeeBasicPay(int empNo, float newPay) {
     Employee emp;
     bool found = false;
     string title;
-    
-    // Read and preserve the title line in the temp file
     getline(inFile, title);
     tempFile << title << endl;
-
-    // Read employee data from the file and write to the temp file
     while (inFile >> emp.empNo >> emp.basicPay >> emp.da >> emp.cca >> emp.hra >> emp.grossSalary) {
         if (emp.empNo == empNo) {
-            emp.basicPay = newPay;  // Modify basic pay
-            emp.calculateSalary();  // Recalculate the salary details
+            emp.basicPay = newPay;
+            emp.calculateSalary(); 
             found = true;
         }
-        emp.writeToFile(tempFile);  // Write the current employee to the temp file
+        emp.writeToFile(tempFile); 
     }
 
     inFile.close();
     tempFile.close();
 
     if (found) {
-        // Replace original file with updated temp file
-        remove("salaries.txt");        // Remove original file
-        rename("temp.txt", "salaries.txt"); // Rename temp file to original file
+        remove("salaries.txt");     
+        rename("temp.txt", "salaries.txt"); 
         cout << "Employee's basic salary has been modified.\n";
     } else {
         cout << "Employee not found.\n";
-        remove("temp.txt");  // Remove temp file if modification didn't happen
+        remove("temp.txt");
     }
 }
 
@@ -142,21 +127,17 @@ int main() {
     int choice;
     int empNo;
     float newPay;
-
     do {
         cout << "\n1. Add Employee Data\n2. Display Employee Data\n3. Modify Employee Basic Pay\n0. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
-
         switch (choice) {
             case 1:
                 addEmployeeData();
                 break;
-
             case 2:
                 displayEmployeeData();
                 break;
-
             case 3:
                 cout << "Enter Employee Number to modify: ";
                 cin >> empNo;
@@ -164,16 +145,12 @@ int main() {
                 cin >> newPay;
                 modifyEmployeeBasicPay(empNo, newPay);
                 break;
-
             case 0:
                 cout << "Exiting program.\n";
                 break;
-
             default:
                 cout << "Invalid choice! Please try again.\n";
         }
-
     } while (choice != 0);
-
     return 0;
 }

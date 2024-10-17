@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<iomanip>
 using namespace std;
 
 class TelephoneDirectory {
@@ -12,45 +13,36 @@ public:
         cout << "Enter number: ";
         cin >> number;
     }
-
     void display() const {
-        cout << "Name: " << name << "\tNumber: " << number << endl;
+        cout<<setw(10)<<name<<setw(15)<<number<<endl;
     }
-
     string getName() const {
         return name;
     }
-
     string getNumber() const {
         return number;
     }
-
-    // Overload operator >> to read data from file
     friend istream& operator>>(istream& in, TelephoneDirectory& td) {
         in >> td.name >> td.number;
         return in;
     }
-
-    // Overload operator << to write data to file
     friend ostream& operator<<(ostream& out, const TelephoneDirectory& td) {
         out << td.name << " " << td.number << endl;
         return out;
     }
 };
-
 void addEntry(fstream& file) {
     TelephoneDirectory td;
     td.add();
-    file.clear();  // Clear EOF flag if any
-    file.seekp(0, ios::end); // Move to the end of the file for appending
-    file << td;  // Write entry to the file
+    file.clear();  
+    file.seekp(0, ios::end); 
+    file << td;  
     cout << "Entry added to the directory.\n";
 }
-
 void searchEntry(fstream& file, const string& name) {
     TelephoneDirectory td;
-    file.clear();  // Clear EOF flag if any
-    file.seekg(0, ios::beg); // Move to the start of the file
+    file.clear();
+    file.seekg(0, ios::beg); 
     bool found = false;
 
     while (file >> td) {
@@ -61,48 +53,45 @@ void searchEntry(fstream& file, const string& name) {
             break;
         }
     }
-
-    if (!found) {
+    if (!found)
         cout << "Entry not found.\n";
-    }
 }
 
 void updateEntry(fstream& file, const string& name) {
-    fstream tempFile("temp.txt", ios::out);  // Temporary file to store updated data
+    fstream tempFile("temp.txt", ios::out);  
     TelephoneDirectory td;
     bool found = false;
 
-    file.clear();  // Clear EOF flag if any
-    file.seekg(0, ios::beg); // Move to the start of the file
+    file.clear();  
+    file.seekg(0, ios::beg);
 
     while (file >> td) {
         if (td.getName() == name) {
             cout << "Updating entry for " << name << "...\n";
-            td.add();  // Get new details from the user
+            td.add(); 
             found = true;
         }
-        tempFile << td;  // Write either updated or original entry to temp file
+        tempFile << td;
     }
 
     file.close();
     tempFile.close();
 
     if (found) {
-        // Replace old file with updated temp file
         remove("telephone_directory.txt");
         rename("temp.txt", "telephone_directory.txt");
         cout << "Entry updated.\n";
-        file.open("telephone_directory.txt", ios::in | ios::out | ios::app); // Reopen file
+        file.open("telephone_directory.txt", ios::in | ios::out | ios::app); 
     } else {
         cout << "Entry not found.\n";
-        remove("temp.txt");  // Remove temp file if not needed
+        remove("temp.txt");  
     }
 }
 
 void displayAllEntries(fstream& file) {
     TelephoneDirectory td;
-    file.clear();  // Clear EOF flag if any
-    file.seekg(0, ios::beg); // Move to the start of the file
+    file.clear();  
+    file.seekg(0, ios::beg); 
 
     cout << "Telephone Directory Entries:\n";
     while (file >> td) {
@@ -139,6 +128,8 @@ int main() {
                 updateEntry(file, name);
                 break;
             case 4:
+                cout<<"Displaying all entries"<<endl;
+                cout<<setw(10)<<"Name"<<setw(15)<<"Number"<<endl;
                 displayAllEntries(file);
                 break;
             case 5:

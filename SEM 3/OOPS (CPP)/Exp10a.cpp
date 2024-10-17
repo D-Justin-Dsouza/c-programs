@@ -7,11 +7,9 @@ int main()
     ofstream f1, f2;
     f1.open("file1.txt");
     f2.open("file2.txt");
-    
-    // Check if files are successfully opened
     if (!f1.is_open() || !f2.is_open()) {
         cerr << "Error opening file1 or file2." << endl;
-        return 1;  // Return an error code
+        return 1; 
     }
 
     int n;
@@ -30,8 +28,6 @@ int main()
 
     f1.close();
     f2.close();
-
-    // Open the files for reading
     ifstream file1("file1.txt");
     ifstream file2("file2.txt");
     
@@ -48,22 +44,15 @@ int main()
     }
 
     int a[8], i = 0;
-
-    // Read elements from file1
     while (file1 >> n)
         a[i++] = n;
-
-    // Read elements from file2
     while (file2 >> n)
         a[i++] = n;
-
-    // Check if the total number of elements is correct
     if (i != 8) {
         cerr << "Error: Expected 8 elements, but got " << i << " elements." << endl;
         return 1;
     }
 
-    // Sort the array using bubble sort
     for(int i = 0; i < 7; i++) {
         for(int j = 0; j < 7 - i; j++) {
             if(a[j] > a[j+1]) {
@@ -74,7 +63,6 @@ int main()
         }
     }
 
-    // Write sorted elements to file3
     for(int i = 0; i < 8; i++)
         file3 << a[i] << endl;
 

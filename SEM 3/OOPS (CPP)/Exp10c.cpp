@@ -6,11 +6,9 @@ using namespace std;
 class Student {
     string name, roll, address, branch;
 public:
-    // Function to take input from the user
     void add() {
         cout << "Enter name: ";
-        cin >> ws;  // To consume any leading whitespace
-        getline(cin, name);  // For full name input
+        getline(cin, name);
         cout << "Enter roll: ";
         getline(cin, roll);
         cout << "Enter address: ";
@@ -18,21 +16,15 @@ public:
         cout << "Enter branch: ";
         getline(cin, branch);
     }
-
-    // Function to display student details
-    void display() const {
+    void display(){
         cout << "Name: " << name << endl;
         cout << "Roll: " << roll << endl;
         cout << "Address: " << address << endl;
         cout << "Branch: " << branch << endl;
     }
-
-    // Function to return roll number
-    string getRoll() const {
+    string getRoll(){
         return roll;
     }
-
-    // Overload >> operator for reading from file
     friend istream& operator>>(istream& in, Student& s) {
         getline(in, s.name);
         getline(in, s.roll);
@@ -40,8 +32,6 @@ public:
         getline(in, s.branch);
         return in;
     }
-
-    // Overload << operator for writing to file
     friend ostream& operator<<(ostream& out, const Student& s) {
         out << s.name << endl;
         out << s.roll << endl;
@@ -50,29 +40,25 @@ public:
         return out;
     }
 };
-
-// Function to add a student and save to a file
 void addStudent() {
     Student s;
     s.add();
     fstream file;
-    file.open(s.getRoll() + ".txt", ios::out);  // Create a file named after the roll number
+    file.open(s.getRoll() + ".txt", ios::out);
     if (file.is_open()) {
-        file << s;  // Write student details to the file
+        file << s; 
         file.close();
         cout << "Student details added successfully!\n";
     } else {
         cout << "Error opening file for writing!\n";
     }
 }
-
-// Function to search for a student by roll number
 void searchStudent(const string& roll) {
     Student s;
     fstream file;
-    file.open(roll + ".txt", ios::in);  // Open the file with the given roll number
+    file.open(roll + ".txt", ios::in); 
     if (file.is_open()) {
-        file >> s;  // Read student details from the file
+        file >> s;  
         s.display();
         file.close();
     } else {
@@ -111,7 +97,7 @@ int main() {
     while (true) {
         cout << "\n1. Add\n2. Search\n3. Update\n4. Display\n5. Exit\nEnter choice: ";
         cin >> choice;
-
+        cin.ignore();
         switch (choice) {
             case 1:
                 addStudent();
