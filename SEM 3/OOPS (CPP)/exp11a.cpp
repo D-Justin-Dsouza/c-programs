@@ -8,8 +8,12 @@ iv. Swapping strings*/
 #include <string>
 using namespace std;
 
-int main()
-{
+void swap(string &s1, string &s2){
+    string temp = s1;
+    s1 = s2;
+    s2 = temp;
+}
+int main(){
     string s1 = "This is";
     string s2 = " a string";
     string s3 = s1 + s2;
@@ -43,7 +47,7 @@ int main()
     cout << "Before swapping:" << endl;
     cout << "s6: " << s6 << endl;
     cout << "s7: " << s7 << endl;
-    s6.swap(s7);
+    swap(s6, s7);
     cout << "After swapping:" << endl;
     cout << "s6: " << s6 << endl;
     cout << "s7: " << s7 << endl;

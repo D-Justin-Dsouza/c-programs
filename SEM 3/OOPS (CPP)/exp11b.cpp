@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(){
-    string str = "Hello World!";
+    string str = "Hello Everyone!\nThis is a test";
     string::iterator it;
     for(it = str.begin(); it != str.end(); it++){
         cout << *it;

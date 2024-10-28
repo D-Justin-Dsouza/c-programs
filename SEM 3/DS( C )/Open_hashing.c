@@ -8,7 +8,7 @@ enum type_of_record { EMPTY, DELETED, OCCUPIED };
 struct record {
     int key;
     enum type_of_record status;
-    struct record *next; // Correcting pointer type
+    struct record *next; 
 };
 
 struct record table1[MAX], *table2[MAX];
@@ -17,7 +17,7 @@ void insert_double_hashing(struct record table[], int key);
 int search_double_hashing(struct record table[], int key);
 void delete_double_hashing(struct record table[], int key);
 
-void insert_separate_chaining(struct record *table[], int key); // Correcting function name
+void insert_separate_chaining(struct record *table[], int key);
 int search_separate_chaining(struct record *table[], int key);
 void delete_separate_chaining(struct record *table[], int key);
 
@@ -172,7 +172,7 @@ int main() {
         printf("6. Search using separate chaining\n");
         printf("7. Delete using separate chaining\n");
         printf("8. Display using separate chaining\n");
-        printf("9. Exit\n");
+        printf("0. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         switch (choice) {
@@ -218,7 +218,7 @@ int main() {
             case 8:
                 display_separate_chaining(table2);
                 break;
-            case 9:
+            case 0:
                 exit(0);
             default:
                 printf("Invalid choice\n");

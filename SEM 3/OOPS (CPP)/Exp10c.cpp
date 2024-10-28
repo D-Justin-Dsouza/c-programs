@@ -32,7 +32,7 @@ public:
         getline(in, s.branch);
         return in;
     }
-    friend ostream& operator<<(ostream& out, const Student& s) {
+    friend ostream& operator<<(ostream& out,  Student& s) {
         out << s.name << endl;
         out << s.roll << endl;
         out << s.address << endl;
@@ -53,7 +53,7 @@ void addStudent() {
         cout << "Error opening file for writing!\n";
     }
 }
-void searchStudent(const string& roll) {
+void searchStudent( string& roll) {
     Student s;
     fstream file;
     file.open(roll + ".txt", ios::in); 
@@ -65,29 +65,24 @@ void searchStudent(const string& roll) {
         cout << "No student found with roll number " << roll << "!\n";
     }
 }
-
-// Function to update student details
-void updateStudent(const string& roll) {
+void updateStudent(string& roll) {
     Student s;
     fstream file;
-    file.open(roll + ".txt", ios::in);  // Open the file to check if it exists
+    file.open(roll + ".txt", ios::in); 
     if (file.is_open()) {
         file.close();
         cout << "Enter updated details:\n";
-        s.add();  // Get new details from the user
-
-        file.open(roll + ".txt", ios::out);  // Reopen the file in output mode to overwrite
-        file << s;  // Write updated details to the file
+        s.add(); 
+        file.open(roll + ".txt", ios::out);
+        file << s;  
         file.close();
         cout << "Student details updated successfully!\n";
     } else {
         cout << "No student found with roll number " << roll << "!\n";
     }
 }
-
-// Function to display a student's details
-void displayStudent(const string& roll) {
-    searchStudent(roll);  // Reusing the search function to display student details
+void displayStudent( string& roll) {
+    searchStudent(roll); 
 }
 
 int main() {
@@ -110,6 +105,7 @@ int main() {
             case 3:
                 cout << "Enter roll number to update: ";
                 cin >> roll;
+                cin.ignore();
                 updateStudent(roll);
                 break;
             case 4:

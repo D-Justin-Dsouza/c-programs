@@ -9,11 +9,10 @@ int main(){
     string name;
     int age;
     float height;
-    string input = "John 25 5.8";
-    stringstream ss(input);
-    ss >> name >> age >> height;
-    cout << "Name: " << name << endl;
-    cout << "Age: " << age << endl;
-    cout << "Height: " << height << endl;
+    cout << "Enter name, age and height: ";
+    cin >>name>> age >> height;
+    stringstream ss;
+    ss << name << " " << age << " " << height;
+    cout << "Input: " << ss.str() << endl;
     return 0;
 }

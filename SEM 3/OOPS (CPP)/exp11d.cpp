@@ -8,27 +8,20 @@
 #include<fstream>
 #include<cctype>
 using namespace std;
-
-int main()
-{
+int main(){
     string word, s;
-    int count = 0;
-    
+    int count = 0;    
     cout << "Enter the word to be searched: ";
     cin >> word;
-    
     ifstream file("exp11d.txt");
     if (file.is_open()) {
         while (file >> s) {
-            cout<<s<<endl;
             if (s.find(word) != string::npos) {
                 count++;
             }
         }
         cout << "The word \"" << word << "\" appears " << count << " times in the text." << endl;
-    } else {
+    }else 
         cout << "word not found." << endl;
-    }
-
     return 0;
 }
