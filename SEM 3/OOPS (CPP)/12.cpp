@@ -6,9 +6,14 @@ using namespace std;
 template <class T>
 bool palindrome(vector<T> v){
     int n = v.size();
-    for (int i = 0; i < n/2; i++){
-        if (v[i] != v[n-i-1])
+    typename vector<T>::iterator it1 = v.begin();
+    typename vector<T>::iterator it2 = v.end() - 1;
+    while(it1 < it2){
+        if(*it1 != *it2){
             return false;
+        }
+        it1++;
+        it2--;
     }
     return true;
 }

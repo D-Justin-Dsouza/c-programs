@@ -128,27 +128,22 @@ void display(struct node *start) {
     printf("\n---------------------------------------------------------------->\n");
 }
 
-struct node *swapAdjacent(struct node *start) {
+struct node *swapAdjacent(struct node *start){
     struct node *temp = start;
-    while (temp != NULL && temp->next != NULL) {
-        struct node *first = temp;
-        struct node *second = temp->next;
-
-        if (first->prev != NULL) {
-            first->prev->next = second;
-        } else {
-            start = second;
-        }
-
-        second->prev = first->prev;
-        first->next = second->next;
-        if (second->next != NULL) {
-            second->next->prev = first;
-        }
-        second->next = first;
-        first->prev = second;
-
-        temp = first->next;
+    while(temp!=NULL && temp->next!=NULL){
+        struct node *first= temp;
+        struct node *second=temp->next;
+        if(first->prev!=NULL)
+            first->prev->next=second;
+        else
+            start=second;
+        second->prev=first->prev;
+        first->next=second->next;
+        if(second->next!=NULL)
+            second->next->prev=first;
+        second->next=first;
+        first->prev=second;
+        temp=first->next;
     }
     return start;
 }

@@ -47,22 +47,17 @@ void display(struct node *last) {
     printf("\n<----------------------------------------------------------------\n");
 }
 struct node *delAlt(struct node *last) {
-    if (last == NULL || last->next == last) {
+    if (last == NULL || last->next == last)
         return last;
-    }
     struct node *p = last->next, *q;
     do {
         q = p->next;
-        if (q == last) {
+        if (q == last)
             last = p;
-        }
         p->next = q->next;
         free(q);
         p = p->next;
-        if (p == last->next || p->next == last->next) {
-            break;
-        }
-    } while (p != last->next);
+    } while (p != last->next && p->next != last->next);
     return last;
 }
 

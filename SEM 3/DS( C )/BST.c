@@ -38,32 +38,36 @@ struct Node *search(struct Node *ptr, int data) {
     return search(ptr->right, data);
 }
 
-struct Node *Del(struct Node *root, int dkey) {
-    if (root == NULL) {
-        return root;
+struct Node *Del(struct Node *ptr, int dkey) {
+    struct node *tmp, *succ;
+    if(ptr==NULL){
+        printf("%d not found",dkey);
+        return ptr;
     }
-    if (dkey < root->info) {
-        root->left = Del(root->left, dkey);
-    } else if (dkey > root->info) {
-        root->right = Del(root->right, dkey);
-    } else {
-        if (root->left == NULL) {
-            struct Node *temp = root->right;
-            free(root);
-            return temp;
-        } else if (root->right == NULL) {
-            struct Node *temp = root->left;
-            free(root);
-            return temp;
+    if(dkey<ptr->info)
+        ptr->left=Del(ptr->left,dkey);
+    else if(dkey>ptr->info)
+        ptr->right=Del(ptr->right,dkey);
+    else{
+        if(ptr->left!=NULL && ptr->right!=NULL){
+            succ=ptr->right;
+            while(succ->left!=NULL)
+                succ=succ->left;
+            ptr->info=succ->info;
+            ptr->right=Del(ptr->rchild, succ->info);
         }
-        struct Node *temp = root->right;
-        while (temp->left != NULL) {
-            temp = temp->left;
+        else{
+            tmp=ptr;
+            if(ptr->left != NULL)
+                ptr=ptr->left;
+            else if(ptr->right!=NULL)
+                ptr=ptr->right;
+            else
+                ptr=NULL;
+            free(tmp);
         }
-        root->info = temp->info;
-        root->right = Del(root->right, temp->info);
     }
-    return root;
+    return ptr;
 }
 int max(int a, int b) {
     return (a > b) ? a : b;

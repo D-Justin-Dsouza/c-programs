@@ -4,7 +4,6 @@
 #include <string.h>
 #define MAX 7
 enum type_of_record{EMPTY, DELETED, OCCUPIED};
-
 struct record{
     int key;
     enum type_of_record status;
@@ -16,24 +15,24 @@ void delete_linear_hashing(struct record table[], int key);
 void insert_quadratic_hashing(struct record table[],int key);
 int search_quadratic_hashing(struct record table[],int key);
 void delete_quadratic_hashing(struct record table[],int key);
-
 void display(struct record table[]){
     for(int i=0;i<MAX;i++){
-        printf("%-2d",i);
+        printf("-------------\n");
+        printf("|%-2d",i);
         if(table[i].status==OCCUPIED){
-            printf("|%5d|",table[i].key);
+            printf("|%8d|",table[i].key);
         }
         else if(table[i].status==DELETED)
-            printf("|DELETED|");
+            printf("| DELETED|");
         else
-            printf("|EMPTY|");
+            printf("|   EMPTY|");
         printf("\n");
     }
+    printf("-------------\n");
 }
 int hash(int key){
     return key % MAX;
 }
-
 void insert_linear_hashing(struct record table[],int key){
     int i,h,loc;
     h=hash(key);
@@ -42,7 +41,6 @@ void insert_linear_hashing(struct record table[],int key){
         if(table[loc].status==EMPTY || table[loc].status==DELETED){
             table[loc].key=key;
             table[loc].status=OCCUPIED;
-            printf("Record inserted at location %d\n",loc);
             return;
         }
         if(table[loc].key==key){
@@ -80,7 +78,6 @@ void insert_quadratic_hashing(struct record table[],int key){
         if(table[loc].status==EMPTY || table[loc].status==DELETED){
             table[loc].key=key;
             table[loc].status=OCCUPIED;
-            printf("Record inserted at location %d\n",loc);
             return;
         }
         if(table[loc].key==key){
@@ -111,61 +108,24 @@ void delete_quadratic_hashing(struct record table[], int key){
         table[loc].status=DELETED;
 }
 int main(){
-    //menu driven for quadratic and linear hashing
-    int choice,key;
-    while(1){
-        printf("1. Insert in linear hashing\n");
-        printf("2. Search in linear hashing\n");
-        printf("3. Delete in linear hashing\n");
-        printf("4. Insert in quadratic hashing\n");
-        printf("5. Search in quadratic hashing\n");
-        printf("6. Delete in quadratic hashing\n");
-        printf("7. Display\n");
-        printf("0. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d",&choice);
-        switch(choice){
-            case 1:
-                printf("Enter the key: ");
-                scanf("%d",&key);
-                insert_linear_hashing(table1,key);
-                break;
-            case 2:
-                printf("Enter the key: ");
-                scanf("%d",&key);
-                search_linear_hashing(table1,key);
-                break;
-            case 3:
-                printf("Enter the key: ");
-                scanf("%d",&key);
-                delete_linear_hashing(table1,key);
-                break;
-            case 4:
-                printf("Enter the key: ");
-                scanf("%d",&key);
-                insert_quadratic_hashing(table2,key);
-                break;
-            case 5:
-                printf("Enter the key: ");
-                scanf("%d",&key);
-                search_quadratic_hashing(table2,key);
-                break;
-            case 6:
-                printf("Enter the key: ");
-                scanf("%d",&key);
-                delete_quadratic_hashing(table2,key);
-                break;
-            case 7:
-                printf("Linear hashing\n");
-                display(table1);
-                printf("Quadratic hashing\n");
-                display(table2);
-                break;
-            case 0:
-                exit(0);
-            default:
-                printf("Invalid choice\n");
-        }
+    int key;
+    for(int i=0;i<MAX;i++){
+        table1[i].status=EMPTY;
+        table2[i].status=EMPTY;
     }
+//    int keys[]={6822,1574,6443,4179,3067,3667,2051,4065,2661,1739};
+  int keys[]={8293, 5341, 7624, 4917, 3281, 4532, 2078, 6116};
+//  int keys[]={9254, 3378, 7842, 5631, 2947, 6195, 4520, 8391, 2104, 6782}
+    printf("Keys are: ");
+    for(int i=0;i<MAX;i++)
+        printf("%d ",keys[i]);
+    for(int i=0;i<MAX;i++){
+        insert_linear_hashing(table1,keys[i]);
+        insert_quadratic_hashing(table2,keys[i]);
+    }
+    printf("\nLinear Probing\n");
+    display(table1);
+    printf("\nQuadratic Probing\n");
+    display(table2);
     return 0;
 }
